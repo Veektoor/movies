@@ -24,12 +24,14 @@ const signup = async (req, res) => {
       { expiresIn: "24h" }
     );
 
+    const { password: _, salt: __, ...userData } = user.toObject();
+
     responseHandler.created(res, {
       token,
-      ...user._doc,
-      id: user.id
+      ...userData
     });
-  } catch {
+  } catch (error) {
+    console.error(error);
     responseHandler.error(res);
   }
 };
@@ -50,15 +52,14 @@ const signin = async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    user.password = undefined;
-    user.salt = undefined;
+    const { password: _, salt: __, ...userData } = user.toObject();
 
     responseHandler.created(res, {
       token,
-      ...user._doc,
-      id: user.id
+      ...userData
     });
-  } catch {
+  } catch (error) {
+    console.error(error);
     responseHandler.error(res);
   }
 };
@@ -78,7 +79,8 @@ const updatePassword = async (req, res) => {
     await user.save();
 
     responseHandler.ok(res);
-  } catch {
+  } catch (error) {
+    console.error(error);
     responseHandler.error(res);
   }
 };
@@ -90,7 +92,8 @@ const getInfo = async (req, res) => {
     if (!user) return responseHandler.notfound(res);
 
     responseHandler.ok(res, user);
-  } catch {
+  } catch (error) {
+    console.error(error);
     responseHandler.error(res);
   }
 };

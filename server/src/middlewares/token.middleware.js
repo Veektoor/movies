@@ -4,19 +4,14 @@ import userModel from "../models/user.model.js";
 
 const tokenDecode = (req) => {
   try {
-    const bearerHeader = req.headers["authorization"];
+    const bearerHeader = req.headers.authorization || "";
+    const [scheme, token] = bearerHeader.split(" ");
 
-    if (bearerHeader) {
-      const token = bearerHeader.split(" ")[1];
+    if (!token || scheme?.toLowerCase() !== "bearer") return false;
 
-      return jsonwebtoken.verify(
-        token,
-        process.env.TOKEN_SECRET
-      );
-    }
-
-    return false;
-  } catch {
+    return jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
+  } catch (error) {
+    console.error("Invalid auth token:", error);
     return false;
   }
 };
