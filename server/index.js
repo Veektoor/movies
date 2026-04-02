@@ -18,7 +18,19 @@ if (missingEnv.length > 0) {
   process.exit(1);
 }
 
-const allowedOrigins = (process.env.CLIENT_URL || "").split(",").map(origin => origin.trim()).filter(Boolean);
+const defaultAllowedOrigins = [
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "https://donmov.vercel.app"
+];
+
+const allowedOrigins = [
+  ...new Set(
+    [...defaultAllowedOrigins, ...(process.env.CLIENT_URL || "").split(",")]
+      .map(origin => origin.trim())
+      .filter(Boolean)
+  )
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
