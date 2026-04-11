@@ -17,7 +17,9 @@ const MediaSlide = ({ mediaType, mediaCategory }) => {
         page: 1
       });
 
-      if (response) setMedias(response.results);
+      if (response) {
+        setMedias(Array.isArray(response.results) ? response.results : []);
+      }
       if (err) toast.error(err.message);
     };
 
@@ -30,7 +32,7 @@ const MediaSlide = ({ mediaType, mediaCategory }) => {
         A refined row of high-signal picks curated from current popular and top-rated catalogs.
       </Typography>
       <AutoSwiper>
-        {medias.map((media, index) => (
+        {Array.isArray(medias) && medias.map((media, index) => (
           <SwiperSlide key={index}>
             <MediaItem media={media} mediaType={mediaType} />
           </SwiperSlide>
