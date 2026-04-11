@@ -31,8 +31,10 @@ const MediaSearch = () => {
 
       if (err) toast.error(err.message);
       if (response) {
-        if (page > 1) setMedias(m => [...m, ...response.results]);
-        else setMedias([...response.results]);
+        const results = Array.isArray(response.results) ? response.results : [];
+
+        if (page > 1) setMedias(m => [...m, ...results]);
+        else setMedias(results);
       }
     },
     [mediaType, query, page],
