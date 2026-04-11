@@ -7,10 +7,11 @@ import serverless from "serverless-http";
 import "dotenv/config";
 import routes from "./src/routes/index.js";
 import responseHandler from "./src/handlers/response.handler.js";
+import { connectDatabase, getDatabaseStatus } from "./src/config/database.js";
 
 const app = express();
 
-const requiredEnv = ["MONGODB_URL", "TOKEN_SECRET"];
+const requiredEnv = ["MONGODB_URL", "TOKEN_SECRET", "TMDB_BASE_URL", "TMDB_KEY"];
 const missingEnv = requiredEnv.filter(name => !process.env[name]);
 
 if (missingEnv.length > 0) {
@@ -51,21 +52,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const connectDatabase = async () => {
-  if (mongoose.connection.readyState === 1) return;
-
-  await mongoose.connect(process.env.MONGODB_URL);
+mongoose.connection.on("connected", () => {
   console.log("Mongodb connected");
-};
+});
 
-app.use(async (req, res, next) => {
-  try {
-    await connectDatabase();
-    next();
-  } catch (error) {
-    console.error("Database connection error:", error);
-    responseHandler.error(res);
-  }
+mongoose.connection.on("error", (error) => {
+  console.error("Mongodb connection error:", error);
+});
+
+app.get("/api/v1/health", (req, res) => {
+  responseHandler.ok(res, {
+    status: "ok",
+    database: getDatabaseStatus()
+  });
 });
 
 app.use("/api/v1", routes);
@@ -81,16 +80,13 @@ const port = process.env.PORT || 5000;
 if (!process.env.VERCEL) {
   const server = http.createServer(app);
 
-  connectDatabase().then(() => {
-    server.listen(port, () => {
-      console.log(`Server is listening on port ${port}`);
-    });
-  }).catch((err) => {
+  server.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+  });
+
+  connectDatabase().catch((err) => {
     console.error("Startup database connection failed:", err);
-    process.exit(1);
   });
 }
 
 export default serverless(app);
-
-//test

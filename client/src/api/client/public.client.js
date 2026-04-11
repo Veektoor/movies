@@ -1,7 +1,7 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const baseURL="https://movies-5hbd.vercel.app/api/v1/";
+const baseURL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api/v1/";
 
 
 

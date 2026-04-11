@@ -4,6 +4,7 @@ import userModel from "../models/user.model.js";
 import favoriteModel from "../models/favorite.model.js";
 import reviewModel from "../models/review.model.js";
 import tokenMiddlerware from "../middlewares/token.middleware.js";
+import { isDatabaseConnected } from "../config/database.js";
 
 const getList = async (req, res) => {
   try {
@@ -67,18 +68,23 @@ const getDetail = async (req, res) => {
 
     media.images = await tmdbApi.mediaImages(params);
 
-    const tokenDecoded = tokenMiddlerware.tokenDecode(req);
+    if (isDatabaseConnected()) {
+      const tokenDecoded = tokenMiddlerware.tokenDecode(req);
 
-    if (tokenDecoded) {
-      const user = await userModel.findById(tokenDecoded.data);
+      if (tokenDecoded) {
+        const user = await userModel.findById(tokenDecoded.data);
 
-      if (user) {
-        const isFavorite = await favoriteModel.findOne({ user: user.id, mediaId });
-        media.isFavorite = isFavorite !== null;
+        if (user) {
+          const isFavorite = await favoriteModel.findOne({ user: user.id, mediaId });
+          media.isFavorite = isFavorite !== null;
+        }
       }
-    }
 
-    media.reviews = await reviewModel.find({ mediaId }).populate("user").sort("-createdAt");
+      media.reviews = await reviewModel.find({ mediaId }).populate("user").sort("-createdAt");
+    } else {
+      media.isFavorite = false;
+      media.reviews = [];
+    }
 
     responseHandler.ok(res, media);
   } catch (e) {

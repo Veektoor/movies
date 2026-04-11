@@ -8,10 +8,13 @@ const tokenDecode = (req) => {
     const [scheme, token] = bearerHeader.split(" ");
 
     if (!token || scheme?.toLowerCase() !== "bearer") return false;
+    if (["null", "undefined"].includes(token.toLowerCase())) return false;
 
     return jsonwebtoken.verify(token, process.env.TOKEN_SECRET);
   } catch (error) {
-    console.error("Invalid auth token:", error);
+    if (error.name !== "JsonWebTokenError" || error.message !== "jwt malformed") {
+      console.error("Invalid auth token:", error);
+    }
     return false;
   }
 };

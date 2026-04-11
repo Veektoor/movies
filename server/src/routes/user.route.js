@@ -5,6 +5,7 @@ import userController from "../controllers/user.controller.js";
 import requestHandler from "../handlers/request.handler.js";
 import userModel from "../models/user.model.js";
 import tokenMiddleware from "../middlewares/token.middleware.js";
+import databaseMiddleware from "../middlewares/database.middleware.js";
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ router.post(
   body("displayName")
     .exists().withMessage("displayName is required")
     .isLength({ min: 8 }).withMessage("displayName minimum 8 characters"),
+  databaseMiddleware.requireDatabase,
   requestHandler.validate,
   userController.signup
 );
@@ -42,12 +44,14 @@ router.post(
   body("password")
     .exists().withMessage("password is required")
     .isLength({ min: 8 }).withMessage("password minimum 8 characters"),
+  databaseMiddleware.requireDatabase,
   requestHandler.validate,
   userController.signin
 );
 
 router.put(
   "/update-password",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   body("password")
     .exists().withMessage("password is required")
@@ -68,18 +72,21 @@ router.put(
 
 router.get(
   "/info",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   userController.getInfo
 );
 
 router.get(
   "/favorites",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   favoriteController.getFavoritesOfUser
 );
 
 router.post(
   "/favorites",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   body("mediaType")
     .exists().withMessage("mediaType is required")
@@ -99,6 +106,7 @@ router.post(
 
 router.delete(
   "/favorites/:favoriteId",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   favoriteController.removeFavorite
 );

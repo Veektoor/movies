@@ -3,17 +3,20 @@ import { body } from "express-validator";
 import reviewController from "../controllers/review.controller.js";
 import tokenMiddleware from "../middlewares/token.middleware.js";
 import requestHandler from "../handlers/request.handler.js";
+import databaseMiddleware from "../middlewares/database.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
 router.get(
   "/",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   reviewController.getReviewsOfUser
 );
 
 router.post(
   "/",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   body("mediaId")
     .exists().withMessage("mediaId is required")
@@ -34,6 +37,7 @@ router.post(
 
 router.delete(
   "/:reviewId",
+  databaseMiddleware.requireDatabase,
   tokenMiddleware.auth,
   reviewController.remove
 );

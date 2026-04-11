@@ -24,11 +24,17 @@ const notfound = (res) => responseWithData(res, 404, {
   message: "Resource not found"
 });
 
+const serviceUnavailable = (res, message) => responseWithData(res, 503, {
+  status: 503,
+  message
+});
+
 export default {
   error,
   badrequest,
   ok,
   created,
   unauthorize,
-  notfound
+  notfound,
+  serviceUnavailable
 };

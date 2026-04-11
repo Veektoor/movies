@@ -1,7 +1,22 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const baseURL="https://movies-5hbd.vercel.app/api/v1/";
+const baseURL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api/v1/";
+
+const getAccessToken = () => {
+  const token = localStorage.getItem("actkn");
+
+  if (!token) return null;
+
+  const normalizedToken = token.trim();
+
+  if (!normalizedToken || ["null", "undefined"].includes(normalizedToken.toLowerCase())) {
+    localStorage.removeItem("actkn");
+    return null;
+  }
+
+  return normalizedToken;
+};
 
 const privateClient = axios.create({
   baseURL,
@@ -11,11 +26,13 @@ const privateClient = axios.create({
 });
 
 privateClient.interceptors.request.use(async config => {
+  const token = getAccessToken();
+
   return {
     ...config,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem("actkn")}`
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
     }
   };
 });
