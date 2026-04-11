@@ -1,7 +1,8 @@
 import axios from "axios";
 import queryString from "query-string";
+import envConfigs from "../../configs/env.configs";
 
-const baseURL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000/api/v1/";
+const baseURL = envConfigs.apiBaseUrl;
 
 const getAccessToken = () => {
   const token = localStorage.getItem("actkn");

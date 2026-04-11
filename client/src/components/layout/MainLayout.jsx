@@ -60,6 +60,7 @@ const MainLayout = () => {
           flexGrow={1}
           overflow="hidden"
           minHeight="100vh"
+          sx={{ pt: { xs: 10, md: 12 } }}
         >
           <Outlet />
         </Box>

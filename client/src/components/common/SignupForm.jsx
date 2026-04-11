@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, Button, Stack, TextField } from "@mui/material";
+import { Alert, Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -40,7 +40,6 @@ const SignupForm = ({ switchAuthState }) => {
     onSubmit: async values => {
       setErrorMessage(undefined);
       setIsLoginRequest(true);
-      console.log("asdasdasdasd");
       const { response, err } = await userApi.signup(values);
       setIsLoginRequest(false);
 
@@ -57,48 +56,50 @@ const SignupForm = ({ switchAuthState }) => {
 
   return (
     <Box component="form" onSubmit={signinForm.handleSubmit}>
+      <Typography variant="h5" sx={{ mb: 1 }}>
+        Create account
+      </Typography>
+      <Typography color="text.secondary" sx={{ mb: 3 }}>
+        Set up your profile for favorites, reviews, and personalized browsing.
+      </Typography>
       <Stack spacing={3}>
         <TextField
           type="text"
-          placeholder="username"
+          label="Username"
           name="username"
           fullWidth
           value={signinForm.values.username}
           onChange={signinForm.handleChange}
-          color="success"
           error={signinForm.touched.username && signinForm.errors.username !== undefined}
           helperText={signinForm.touched.username && signinForm.errors.username}
         />
         <TextField
           type="text"
-          placeholder="display name"
+          label="Display name"
           name="displayName"
           fullWidth
           value={signinForm.values.displayName}
           onChange={signinForm.handleChange}
-          color="success"
           error={signinForm.touched.displayName && signinForm.errors.displayName !== undefined}
           helperText={signinForm.touched.displayName && signinForm.errors.displayName}
         />
         <TextField
           type="password"
-          placeholder="password"
+          label="Password"
           name="password"
           fullWidth
           value={signinForm.values.password}
           onChange={signinForm.handleChange}
-          color="success"
           error={signinForm.touched.password && signinForm.errors.password !== undefined}
           helperText={signinForm.touched.password && signinForm.errors.password}
         />
         <TextField
           type="password"
-          placeholder="confirm password"
+          label="Confirm password"
           name="confirmPassword"
           fullWidth
           value={signinForm.values.confirmPassword}
           onChange={signinForm.handleChange}
-          color="success"
           error={signinForm.touched.confirmPassword && signinForm.errors.confirmPassword !== undefined}
           helperText={signinForm.touched.confirmPassword && signinForm.errors.confirmPassword}
         />
@@ -120,7 +121,7 @@ const SignupForm = ({ switchAuthState }) => {
         sx={{ marginTop: 1 }}
         onClick={() => switchAuthState()}
       >
-        sign in
+        Back to sign in
       </Button>
 
       {errorMessage && (

@@ -1,27 +1,39 @@
-import { Paper, Stack, Button, Box, Typography, useTheme } from '@mui/material';
-import React from 'react';
-import Container from './Container';
-import Logo from './Logo';
+import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
+import React from "react";
+import Container from "./Container";
+import Logo from "./Logo";
 import menuConfigs from "../../configs/menu.configs";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const theme = useTheme();
   return (
     <Container>
-      <Paper square={true} sx={{ backgroundImage: "unset", padding: "2rem", position: 'relative' }}>
-        <Stack
-          alignItems="center"
-          justifyContent="space-between"
-          direction={{ xs: "column", md: "row " }}
-          sx={{ height: "max-content" }}
-        >
-          <Logo />
+      <Paper
+        square={false}
+        sx={{
+          mx: { xs: 2, md: 0 },
+          mb: 4,
+          p: { xs: 3, md: 4 },
+          border: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper"
+        }}
+      >
+        <Stack direction={{ xs: "column", md: "row" }} spacing={4} justifyContent="space-between">
+          <Stack spacing={1.5} maxWidth={360}>
+            <Logo />
+            <Typography color="text.secondary">
+              Premium access to movie and television discovery with a cleaner, executive-grade interface.
+            </Typography>
+          </Stack>
           <Box>
+            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
+              Platform
+            </Typography>
             {menuConfigs.main.map((item, index) => (
               <Button
                 key={index}
-                sx={{ color: "inherit" }}
+                sx={{ color: "text.secondary", mr: 0.5 }}
                 component={Link}
                 to={item.path}
               >
@@ -30,31 +42,20 @@ const Footer = () => {
             ))}
           </Box>
         </Stack>
-        <Typography
-          variant="body2"
-          align="center"
-          sx={{
-            position: 'absolute',
-            bottom: '1rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '100%',
-            color: 'gray',
-          }}
+        <Divider sx={{ my: 3 }} />
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={1}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", md: "center" }}
         >
-          &copy; 2024 donmovies Developed by{' '}
-          <a
-            style={{
-              textDecoration: 'none',
-              color: theme.palette.primary.main
-            }}
-            href="https://don-gamma.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Donmureithi
-          </a>
-        </Typography>
+          <Typography variant="body2" color="text.secondary">
+            &copy; 2026 DonMovies. Built for polished media discovery.
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Corporate visual refresh applied across navigation, content rails, and account surfaces.
+          </Typography>
+        </Stack>
       </Paper>
     </Container>
   );

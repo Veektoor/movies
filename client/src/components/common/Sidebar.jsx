@@ -1,4 +1,4 @@
-import { Drawer, List, ListItemButton, ListItemIcon, ListItemText, Stack, Toolbar, Typography } from "@mui/material";
+import { Box, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Stack, Toolbar, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import menuConfigs from "../../configs/menu.configs";
@@ -25,69 +25,74 @@ const Sidebar = ({ open, toggleSidebar }) => {
   };
 
   const drawer = (
-    <>
+    <Box sx={{ height: "100%", bgcolor: "background.paper" }}>
       <Toolbar sx={{ paddingY: "20px", color: "text.primary" }}>
         <Stack width="100%" direction="row" justifyContent="center">
           <Logo />
         </Stack>
       </Toolbar>
-      <List sx={{ paddingX: "30px" }}>
-        <Typography variant="h6" marginBottom="20px">MENU</Typography>
+      <Divider />
+      <List sx={{ paddingX: "24px", paddingY: "28px" }}>
+        <Typography variant="subtitle2" color="text.secondary" marginBottom="14px">Navigation</Typography>
         {menuConfigs.main.map((item, index) => (
           <ListItemButton
             key={index}
             sx={{
-              borderRadius: "10px",
+              borderRadius: "16px",
               marginY: 1,
-              backgroundColor: appState.includes(item.state) ? "primary.main" : "unset"
+              paddingY: 1.4,
+              backgroundColor: appState.includes(item.state) ? "primary.main" : "transparent",
+              color: appState.includes(item.state) ? "primary.contrastText" : "text.primary"
             }}
             component={Link}
             to={item.path}
             onClick={() => toggleSidebar(false)}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText disableTypography primary={<Typography textTransform="uppercase">
+            <ListItemIcon sx={{ color: "inherit", minWidth: 42 }}>{item.icon}</ListItemIcon>
+            <ListItemText disableTypography primary={<Typography>
               {item.display}
             </Typography>} />
           </ListItemButton>
         ))}
 
         {user && (<>
-          <Typography variant="h6" marginBottom="20px">PERSONAL</Typography>
+          <Typography variant="subtitle2" color="text.secondary" marginTop="18px" marginBottom="14px">Personal</Typography>
           {menuConfigs.user.map((item, index) => (
             <ListItemButton
               key={index}
               sx={{
-                borderRadius: "10px",
+                borderRadius: "16px",
                 marginY: 1,
-                backgroundColor: appState.includes(item.state) ? "primary.main" : "unset"
+                paddingY: 1.4,
+                backgroundColor: appState.includes(item.state) ? "primary.main" : "transparent",
+                color: appState.includes(item.state) ? "primary.contrastText" : "text.primary"
               }}
               component={Link}
               to={item.path}
               onClick={() => toggleSidebar(false)}
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText disableTypography primary={<Typography textTransform="uppercase">
+              <ListItemIcon sx={{ color: "inherit", minWidth: 42 }}>{item.icon}</ListItemIcon>
+              <ListItemText disableTypography primary={<Typography>
                 {item.display}
               </Typography>} />
             </ListItemButton>
           ))}
         </>)}
 
-        <Typography variant="h6" marginBottom="20px">THEME</Typography>
-        <ListItemButton onClick={onSwitchTheme}>
+        <Typography variant="subtitle2" color="text.secondary" marginTop="18px" marginBottom="14px">Appearance</Typography>
+        <ListItemButton sx={{ borderRadius: "16px", paddingY: 1.4 }} onClick={onSwitchTheme}>
           <ListItemIcon>
             {themeMode === themeModes.dark && <DarkModeOutlinedIcon />}
             {themeMode === themeModes.light && <WbSunnyOutlinedIcon />}
           </ListItemIcon>
           <ListItemText disableTypography primary={
-            <Typography textTransform="uppercase">
+            <Typography>
               {themeMode === themeModes.dark ? "dark mode" : "light mode"}
             </Typography>
           } />
         </ListItemButton>
       </List>
-    </>
+    </Box>
   );
 
   return (
@@ -97,7 +102,7 @@ const Sidebar = ({ open, toggleSidebar }) => {
       sx={{
         "& .MuiDrawer-Paper": {
           boxSizing: "border-box",
-          widh: sidebarWidth,
+          width: sidebarWidth,
           borderRight: "0px"
         }
       }}

@@ -1,5 +1,5 @@
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Chip, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
@@ -36,7 +36,18 @@ const MediaItem = ({ media, mediaType }) => {
     <Link to={mediaType !== "people" ? routesGen.mediaDetail(mediaType, media.mediaId || media.id) : routesGen.person(media.id)}>
       <Box sx={{
         ...uiConfigs.style.backgroundImage(posterPath),
-        paddingTop: "160%",
+        paddingTop: "158%",
+        overflow: "hidden",
+        borderRadius: "24px",
+        border: "1px solid",
+        borderColor: "divider",
+        boxShadow: "0 18px 38px rgba(0,0,0,0.14)",
+        transform: "translateY(0)",
+        transition: "transform 0.35s ease, box-shadow 0.35s ease",
+        "&:hover": {
+          transform: "translateY(-8px)",
+          boxShadow: "0 28px 48px rgba(0,0,0,0.22)"
+        },
         "&:hover .media-info": { opacity: 1, bottom: 0 },
         "&:hover .media-back-drop, &:hover .media-play-btn": { opacity: 1 },
         color: "primary.contrastText"
@@ -47,29 +58,30 @@ const MediaItem = ({ media, mediaType }) => {
             {favoriteUtils.check({ listFavorites, mediaId: media.id }) && (
               <FavoriteIcon
                 color="primary"
-                sx={{
-                  position: "absolute",
-                  top: 2,
-                  right: 2,
-                  fontSize: "2rem"
-                }}
-              />
-            )}
-            <Box className="media-back-drop" sx={{
-              opacity: { xs: 1, md: 0 },
-              transition: "all 0.3s ease",
-              width: "100%",
-              height: "100%",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              backgroundImage: "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))"
-            }} />
-            <Button
-              className="media-play-btn"
-              variant="contained"
-              startIcon={<PlayArrowIcon />}
               sx={{
+                position: "absolute",
+                top: 16,
+                right: 16,
+                fontSize: "1.8rem",
+                filter: "drop-shadow(0 8px 18px rgba(0,0,0,0.24))"
+              }}
+            />
+          )}
+          <Box className="media-back-drop" sx={{
+            opacity: { xs: 1, md: 0 },
+            transition: "all 0.3s ease",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            backgroundImage: "linear-gradient(to top, rgba(7,12,20,0.98), rgba(7,12,20,0.3) 55%, rgba(7,12,20,0))"
+          }} />
+          <Button
+            className="media-play-btn"
+            variant="contained"
+            startIcon={<PlayArrowIcon />}
+            sx={{
                 display: { xs: "none", md: "flex" },
                 opacity: 0,
                 transition: "all 0.3s ease",
@@ -90,13 +102,24 @@ const MediaItem = ({ media, mediaType }) => {
                 width: "100%",
                 height: "max-content",
                 boxSizing: "border-box",
-                padding: { xs: "10px", md: "2rem 1rem" }
+                padding: { xs: "16px", md: "1.6rem" }
               }}
             >
-              <Stack spacing={{ xs: 1, md: 2 }}>
-                {rate && <CircularRate value={rate} />}
-
-                <Typography>{releaseDate}</Typography>
+              <Stack spacing={{ xs: 1, md: 1.5 }}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  {rate && <CircularRate value={rate} />}
+                  {releaseDate && (
+                    <Chip
+                      label={releaseDate}
+                      size="small"
+                      sx={{
+                        bgcolor: "rgba(255,255,255,0.12)",
+                        color: "primary.contrastText",
+                        border: "1px solid rgba(255,255,255,0.16)"
+                      }}
+                    />
+                  )}
+                </Stack>
 
                 <Typography
                   variant="body1"
@@ -121,8 +144,8 @@ const MediaItem = ({ media, mediaType }) => {
             width: "100%",
             height: "max-content",
             bottom: 0,
-            padding: "10px",
-            backgroundColor: "rgba(0,0,0,0.6)"
+            padding: "16px",
+            backgroundColor: "rgba(7,12,20,0.72)"
           }}>
             <Typography sx={{ ...uiConfigs.style.typoLines(1, "left") }}>
               {media.name}

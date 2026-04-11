@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, Button, Stack, TextField } from "@mui/material";
+import { Alert, Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -31,7 +31,6 @@ const SigninForm = ({ switchAuthState }) => {
     onSubmit: async values => {
       setErrorMessage(undefined);
       setIsLoginRequest(true);
-      console.log("asdasdasdasd");
       const { response, err } = await userApi.signin(values);
       setIsLoginRequest(false);
 
@@ -48,26 +47,30 @@ const SigninForm = ({ switchAuthState }) => {
 
   return (
     <Box component="form" onSubmit={signinForm.handleSubmit}>
+      <Typography variant="h5" sx={{ mb: 1 }}>
+        Sign in
+      </Typography>
+      <Typography color="text.secondary" sx={{ mb: 3 }}>
+        Use your account credentials to continue.
+      </Typography>
       <Stack spacing={3}>
         <TextField
           type="text"
-          placeholder="username"
+          label="Username"
           name="username"
           fullWidth
           value={signinForm.values.username}
           onChange={signinForm.handleChange}
-          color="success"
           error={signinForm.touched.username && signinForm.errors.username !== undefined}
           helperText={signinForm.touched.username && signinForm.errors.username}
         />
         <TextField
           type="password"
-          placeholder="password"
+          label="Password"
           name="password"
           fullWidth
           value={signinForm.values.password}
           onChange={signinForm.handleChange}
-          color="success"
           error={signinForm.touched.password && signinForm.errors.password !== undefined}
           helperText={signinForm.touched.password && signinForm.errors.password}
         />
@@ -89,7 +92,7 @@ const SigninForm = ({ switchAuthState }) => {
         sx={{ marginTop: 1 }}
         onClick={() => switchAuthState()}
       >
-        sign up
+        Create an account
       </Button>
 
       {errorMessage && (

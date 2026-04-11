@@ -1,5 +1,6 @@
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { Box, Button, Chip, Divider, Stack, Typography, useTheme } from "@mui/material";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
+import { Box, Button, Chip, Divider, Paper, Stack, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -48,7 +49,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
       }
       if (err) {
         toast.error(err.message);
-        setGlobalLoading(false);
+        dispatch(setGlobalLoading(false));
       }
     };
 
@@ -59,10 +60,11 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
     <Box sx={{
       position: "relative",
       color: "primary.contrastText",
+      px: { xs: 0, md: 2 },
       "&::before": {
         content: '""',
         width: "100%",
-        height: "30%",
+        height: "24%",
         position: "absolute",
         bottom: 0,
         left: 0,
@@ -84,11 +86,14 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
         {movies.map((movie, index) => (
           <SwiperSlide key={index}>
             <Box sx={{
+              borderRadius: { xs: 0, md: "32px" },
+              overflow: "hidden",
+              mx: { xs: 0, md: 2 },
               paddingTop: {
-                xs: "130%",
-                sm: "80%",
-                md: "60%",
-                lg: "45%"
+                xs: "145%",
+                sm: "85%",
+                md: "62%",
+                lg: "48%"
               },
               backgroundPosition: "top",
               backgroundSize: "cover",
@@ -100,76 +105,108 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
               position: "absolute",
               top: 0,
               left: 0,
+              borderRadius: { xs: 0, md: "32px" },
               ...uiConfigs.style.horizontalGradientBgImage[theme.palette.mode]
             }} />
+            <Box
+              sx={{
+                position: "absolute",
+                inset: { xs: 0, md: 16 },
+                borderRadius: { xs: 0, md: "32px" },
+                border: "1px solid rgba(255,255,255,0.12)",
+                pointerEvents: "none"
+              }}
+            />
             <Box sx={{
               width: "100%",
               height: "100%",
               position: "absolute",
               top: 0,
               left: 0,
-              paddingX: { sm: "10px", md: "5rem", lg: "10rem" }
+              paddingX: { xs: "18px", sm: "24px", md: "4rem", lg: "7rem" }
             }}>
               <Box sx={{
                 height: "100%",
                 display: "flex",
                 alignItems: "center",
-                paddingX: "30px",
                 color: "text.primary",
-                width: { sm: "unset", md: "30%", lg: "40%" }
+                width: { sm: "unset", md: "52%", lg: "48%" }
               }}>
-                <Stack spacing={4} direction="column">
-                  {/* title */}
+                <Stack spacing={3} direction="column">
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2" sx={{ color: "secondary.main" }}>
+                      Featured release
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "text.secondary", maxWidth: 520 }}>
+                      A cleaner presentation layer for premium browsing and fast decision making.
+                    </Typography>
+                  </Stack>
                   <Typography
-                    variant="h4"
-                    fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
-                    fontWeight="700"
+                    variant="h2"
+                    fontSize={{ xs: "2.4rem", md: "3rem", lg: "4.6rem" }}
                     sx={{
                       ...uiConfigs.style.typoLines(2, "left")
                     }}
                   >
                     {movie.title || movie.name}
                   </Typography>
-                  {/* title */}
 
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    {/* rating */}
+                  <Stack direction="row" spacing={1.2} alignItems="center" flexWrap="wrap" useFlexGap>
                     <CircularRate value={movie.vote_average} />
-                    {/* rating */}
-
-                    <Divider orientation="vertical" />
-                    {/* genres */}
+                    <Divider flexItem orientation="vertical" sx={{ display: { xs: "none", sm: "block" } }} />
                     {[...movie.genre_ids].splice(0, 2).map((genreId, index) => (
                       <Chip
-                        variant="filled"
-                        color="primary"
+                        variant="outlined"
+                        color="secondary"
                         key={index}
                         label={genres.find(e => e.id === genreId) && genres.find(e => e.id === genreId).name}
                       />
                     ))}
-                    {/* genres */}
                   </Stack>
 
-                  {/* overview */}
-                  <Typography variant="body1" sx={{
-                    ...uiConfigs.style.typoLines(3)
-                  }}>
-                    {movie.overview}
-                  </Typography>
-                  {/* overview */}
-
-                  {/* buttons */}
-                  <Button
-                    variant="contained"
-                    size="large"
-                    startIcon={<PlayArrowIcon />}
-                    component={Link}
-                    to={routesGen.mediaDetail(mediaType, movie.id)}
-                    sx={{ width: "max-content" }}
+                  <Paper
+                    sx={{
+                      width: "fit-content",
+                      maxWidth: 620,
+                      px: { xs: 2, md: 2.5 },
+                      py: { xs: 1.6, md: 2 },
+                      backgroundColor: "rgba(12, 20, 34, 0.48)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(16px)"
+                    }}
                   >
-                    watch now
-                  </Button>
-                  {/* buttons */}
+                    <Typography variant="body1" sx={{ ...uiConfigs.style.typoLines(3) }}>
+                      {movie.overview}
+                    </Typography>
+                  </Paper>
+
+                  <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      startIcon={<PlayArrowIcon />}
+                      component={Link}
+                      to={routesGen.mediaDetail(mediaType, movie.id)}
+                      sx={{ width: "max-content" }}
+                    >
+                      Open profile
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      color="inherit"
+                      endIcon={<ArrowOutwardIcon />}
+                      component={Link}
+                      to={routesGen.mediaDetail(mediaType, movie.id)}
+                      sx={{
+                        width: "max-content",
+                        borderColor: "rgba(255,255,255,0.28)",
+                        color: "text.primary"
+                      }}
+                    >
+                      View full brief
+                    </Button>
+                  </Stack>
                 </Stack>
               </Box>
             </Box>

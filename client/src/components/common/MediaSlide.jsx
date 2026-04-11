@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { SwiperSlide } from "swiper/react";
 import mediaApi from "../../api/modules/media.api";
 import AutoSwiper from "./AutoSwiper";
@@ -24,13 +25,18 @@ const MediaSlide = ({ mediaType, mediaCategory }) => {
   }, [mediaType, mediaCategory]);
 
   return (
-    <AutoSwiper>
-      {medias.map((media, index) => (
-        <SwiperSlide key={index}>
-          <MediaItem media={media} mediaType={mediaType} />
-        </SwiperSlide>
-      ))}
-    </AutoSwiper>
+    <Box>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2, px: { xs: 2, md: 0 } }}>
+        A refined row of high-signal picks curated from current popular and top-rated catalogs.
+      </Typography>
+      <AutoSwiper>
+        {medias.map((media, index) => (
+          <SwiperSlide key={index}>
+            <MediaItem media={media} mediaType={mediaType} />
+          </SwiperSlide>
+        ))}
+      </AutoSwiper>
+    </Box>
   );
 };
 
