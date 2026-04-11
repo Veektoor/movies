@@ -53,7 +53,7 @@ const Footer = () => {
             &copy; 2026 DonMovies. Built for polished media discovery.
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Corporate visual refresh applied across navigation, content rails, and account surfaces.
+    
           </Typography>
         </Stack>
       </Paper>
