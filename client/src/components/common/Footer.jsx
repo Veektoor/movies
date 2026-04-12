@@ -18,17 +18,14 @@ const Footer = () => {
           borderColor: "divider",
           bgcolor: "background.paper"
         }}
-      >
-        <Stack direction={{ xs: "column", md: "row" }} spacing={4} justifyContent="space-between">
+        >
+          <Stack direction={{ xs: "column", md: "row" }} spacing={4} justifyContent="space-between">
           <Stack spacing={1.5} maxWidth={360}>
             <Logo />
-            <Typography color="text.secondary">
-              Premium access to movie and television discovery with a cleaner, executive-grade interface.
-            </Typography>
           </Stack>
           <Box>
             <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
-              Platform
+              Menu
             </Typography>
             {menuConfigs.main.map((item, index) => (
               <Button
@@ -50,10 +47,7 @@ const Footer = () => {
           alignItems={{ xs: "flex-start", md: "center" }}
         >
           <Typography variant="body2" color="text.secondary">
-            &copy; 2026 DonMovies. Built for polished media discovery.
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-    
+            &copy; 2026 DonMovies
           </Typography>
         </Stack>
       </Paper>

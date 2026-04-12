@@ -1,7 +1,7 @@
 import React from 'react';
 import HeroSlide from '../components/common/HeroSlide';
 import tmdbConfigs from "../api/configs/tmdb.configs";
-import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import uiConfigs from "../configs/ui.configs";
 import Container from "../components/common/Container";
 import MediaSlide from "../components/common/MediaSlide";
@@ -27,17 +27,12 @@ const HomePage = () => {
           <Stack direction={{ xs: "column", md: "row" }} spacing={2} justifyContent="space-between" alignItems={{ xs: "flex-start", md: "center" }}>
             <Box>
               <Typography variant="subtitle2" color="text.secondary">
-                Executive Dashboard
+                Home
               </Typography>
               <Typography variant="h4" sx={{ mt: 0.6 }}>
-                Curated programming, surfaced with a premium layout
+                Browse movies and series
               </Typography>
             </Box>
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              <Chip label="Film intelligence" color="primary" variant="outlined" />
-              <Chip label="Series insights" color="primary" variant="outlined" />
-              <Chip label="Refined discovery" color="primary" variant="outlined" />
-            </Stack>
           </Stack>
         </Paper>
 

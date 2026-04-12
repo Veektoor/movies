@@ -7,7 +7,7 @@ const MediaGrid = ({ medias, mediaType }) => {
   if (list.length === 0) {
     return (
       <Typography color="text.secondary">
-        No media is available right now. Check that the API is reachable and returning results.
+        No results
       </Typography>
     );
   }

@@ -50,10 +50,7 @@ const AuthModal = () => {
             >
               <Logo />
               <Typography variant="h4" sx={{ mt: 4, mb: 1.5 }}>
-                {action === actionState.signin ? "Access your workspace" : "Create a polished account"}
-              </Typography>
-              <Typography sx={{ color: "rgba(255,255,255,0.72)" }}>
-                Sign in to manage favorites, reviews, and your personal media briefing in one place.
+                {action === actionState.signin ? "Sign in" : "Create account"}
               </Typography>
             </Box>
             <Box sx={{ width: { xs: "100%", md: "58%" }, p: { xs: 3, md: 4 } }}>

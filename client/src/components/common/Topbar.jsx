@@ -117,21 +117,12 @@ const Topbar = () => {
 
             {/* user menu */}
             <Stack spacing={2} direction="row" alignItems="center">
-              <Typography
-                variant="subtitle2"
-                sx={{
-                  color: "text.secondary",
-                  display: { xs: "none", lg: "block" }
-                }}
-              >
-                Curated film and series intelligence
-              </Typography>
               {!user && <Button
                 variant="contained"
                 size="large"
                 onClick={() => dispatch(setAuthModalOpen(true))}
               >
-                Client sign in
+                Sign in
               </Button>}
             </Stack>
             {user && <UserMenu />}

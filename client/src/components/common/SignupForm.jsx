@@ -59,9 +59,6 @@ const SignupForm = ({ switchAuthState }) => {
       <Typography variant="h5" sx={{ mb: 1 }}>
         Create account
       </Typography>
-      <Typography color="text.secondary" sx={{ mb: 3 }}>
-        Set up your profile for favorites, reviews, and personalized browsing.
-      </Typography>
       <Stack spacing={3}>
         <TextField
           type="text"
@@ -121,7 +118,7 @@ const SignupForm = ({ switchAuthState }) => {
         sx={{ marginTop: 1 }}
         onClick={() => switchAuthState()}
       >
-        Back to sign in
+        Sign in
       </Button>
 
       {errorMessage && (

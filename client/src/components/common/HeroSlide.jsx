@@ -135,14 +135,9 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                 width: { sm: "unset", md: "52%", lg: "48%" }
               }}>
                 <Stack spacing={3} direction="column">
-                  <Stack spacing={1.5}>
-                    <Typography variant="subtitle2" sx={{ color: "secondary.main" }}>
-                      Featured release
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: "text.secondary", maxWidth: 520 }}>
-                      A cleaner presentation layer for premium browsing and fast decision making.
-                    </Typography>
-                  </Stack>
+                  <Typography variant="subtitle2" sx={{ color: "secondary.main" }}>
+                    Featured
+                  </Typography>
                   <Typography
                     variant="h2"
                     fontSize={{ xs: "2.4rem", md: "3rem", lg: "4.6rem" }}
@@ -191,7 +186,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                       to={routesGen.mediaDetail(mediaType, movie.id)}
                       sx={{ width: "max-content" }}
                     >
-                      Open profile
+                      Open
                     </Button>
                     <Button
                       variant="outlined"
@@ -206,7 +201,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                         color: "text.primary"
                       }}
                     >
-                      View full brief
+                      Details
                     </Button>
                   </Stack>
                 </Stack>

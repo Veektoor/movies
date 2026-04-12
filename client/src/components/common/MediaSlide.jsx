@@ -29,7 +29,7 @@ const MediaSlide = ({ mediaType, mediaCategory }) => {
   return (
     <Box>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2, px: { xs: 2, md: 0 } }}>
-        A refined row of high-signal picks curated from current popular and top-rated catalogs.
+        Selected titles
       </Typography>
       <AutoSwiper>
         {Array.isArray(medias) && medias.map((media, index) => (
