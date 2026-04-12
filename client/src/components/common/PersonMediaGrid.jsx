@@ -17,7 +17,8 @@ const PersonMediaGrid = ({ personId }) => {
 
       if (err) toast.error(err.message);
       if (response) {
-        const mediasSorted = response.cast.sort((a, b) => getReleaseDate(b) - getReleaseDate(a));
+        const cast = Array.isArray(response.cast) ? response.cast : [];
+        const mediasSorted = cast.sort((a, b) => getReleaseDate(b) - getReleaseDate(a));
         setMedias([...mediasSorted]);
         setFilteredMedias([...mediasSorted].splice(0, skip));
       }
